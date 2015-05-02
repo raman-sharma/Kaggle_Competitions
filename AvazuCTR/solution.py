@@ -1,6 +1,6 @@
 from csv import DictReader
 import csv
-from math import exp, log, sqrt
+from math import exp, log, sqrt  
 
 train = open(r'C:\kaggle\CTR\pre_train.csv') # Input the training data
 test = open(r'C:\kaggle\CTR\pre_test.csv')   # Input the testing data
