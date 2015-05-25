@@ -14,6 +14,8 @@ sub_rf1 = pd.read_csv(r'submissions/submission_comp_rf1.csv', header = 0)
 sub_rf2 = pd.read_csv(r'submissions/submission_comp_rf2.csv', header = 0)
 sub_rf3 = pd.read_csv(r'submissions/submission_comp_rf3.csv', header = 0)
 sub_rf4 = pd.read_csv(r'submissions/submission_comp_rf4.csv', header = 0)
+sub_et1 = pd.read_csv(r'submissions/submission_comp_et1.csv', header = 0)
+sub_bag1 = pd.read_csv(r'submissions/submission_comp_bag1.csv', header = 0)
 
 Ids = sub_xgb1['bidder_id'].values
 sub_xgb1 = sub_xgb1.drop(['bidder_id'], axis=1)
@@ -29,6 +31,8 @@ sub_rf1 = sub_rf1.drop(['bidder_id'], axis=1)
 sub_rf2 = sub_rf2.drop(['bidder_id'], axis=1)
 sub_rf3 = sub_rf3.drop(['bidder_id'], axis=1)
 sub_rf4 = sub_rf4.drop(['bidder_id'], axis=1)
+sub_et1 = sub_et1.drop(['bidder_id'], axis=1)
+sub_bag1 = sub_bag1.drop(['bidder_id'], axis=1)
 
 data_xgb1 = sub_xgb1.values
 data_xgb2 = sub_xgb2.values
@@ -43,13 +47,16 @@ data_rf1 = sub_rf1.values
 data_rf2 = sub_rf2.values
 data_rf3 = sub_rf3.values
 data_rf4 = sub_rf4.values
+data_et1 = sub_et1.values
+data_bag1 = sub_bag1.values
 
 comb = []
 for t, i in enumerate(data_xgb1):
     xgb = i*0.2 + data_xgb2[t]*0.0 + data_xgb3[t]*0.2 + data_xgb4[t]*0.3 + data_xgb5[t]*0.3
     nn = data_nn1[t]*0.5 + data_nn2[t]*0.5
-    rf = data_rf1[t]*0.1 + data_rf2[t]*0.1 + data_rf3[t]*0.2 + data_rf4[t]*0.6
-    c = 0.3 * xgb + 0.2 * nn + 0.5 * rf
+    rf = data_rf1[t]*0.1 + data_rf2[t]*0.1 + data_rf3[t]*0.1 + data_rf4[t]*0.5 + data_et1[t]*0.2
+    bag = data_bag1[t]
+    c = 0.1 * xgb + 0.3 * nn + 0.5 * rf + 0.1 * bag
     comb.append(c)
 
 predictions_file = open("submissions/combination.csv", "wb")
